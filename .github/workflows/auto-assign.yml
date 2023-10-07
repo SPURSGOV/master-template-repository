@@ -1,5 +1,6 @@
 name: Auto Assign
 
+# Triggers when issues or pull requests are opened
 on:
   issues:
     types: [opened]
@@ -42,19 +43,21 @@ jobs:
       repository-projects: write
       security-events: write
       id-token: write
+
+    # Steps to be executed in this job
     steps:
+      # Automatically assigns an issue to user rootgov
       - name: 'Auto-assign issue'
         uses: pozil/auto-assign-issue@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: rootgov
-          numOfAssignee: 4
-          
-      - name: '*'
-        uses: ${{ github.usues }}
+          numOfAssignee: 1
+
+      # Additional step with a valid GitHub action
+      - name: 'Additional step'
+        uses: ${{ github.action }}
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           assignees: rootgov
-          numOfAssignee: 4
-
-# The updated version of the workflow provides enhanced functionality and complete write access. It includes permissions for various aspects such as contents, issues, pull requests, repository projects, security events, and statuses. Additionally, the workflow runs on the latest version of Ubuntu. The `auto_assign_job` section specifies the steps to be executed, which involves automatically assigning an issue to the user `rootgov`.
+          numOfAssignee: 1
