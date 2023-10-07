@@ -1,63 +1,94 @@
-name: Auto Assign
 
-# Triggers when issues or pull requests are opened
-on:
+- name: Setup Auto
+  # You may pin to the exact commit or the version.
+  # uses: auto-it/setup-auto@c9043896567e442476e5b8168d1caca08593869d
+  uses: auto-it/setup-auto@v1.0.0
+  with:
+    # Version of Auto to install (latest by default)
+    version: # optional
+    # Git user name to set for Auto
+    git-username: # optional, default is github-actions[bot]
+    # Git email to set for Auto
+    git-email: # optional, default is 41898282+github-actions[bot]@users.noreply.github.com
+    # GH_TOKEN for Auto
+    gh-token: # optional, default is ${{ github.token }}
+
+- name: github-action-auto-format
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-auto-format@970af4c15a720047204400fe5b5ae52fb2991e9b
+  uses: cloudposse/github-action-auto-format@v0.12.0
+  with:
+    # The path on the github-runner where the auto-format action scripts are checked out at runtime
+    actions-files-checkout-path: # optional, default is github-action-auto-format
+    # GitHub username for writing new commits
+    bot-name: # optional, default is cloudpossebot
+    # Email address associated with the GitHub user for writing new commits
+    bot-email: # optional
+    # Name of formatting task to execute. (Options include: readme, github, terraform, and context.)
+    format-task: 
+    # GitHub Token for use in `github_format.sh` and PR creation steps. This token must be granted `workflows` permissions.
+    workflow-token: 
+    
+
+
+- name: Auto Assign
+  on:
   issues:
-    types: [opened]
+          types: [opened]
   pull_request:
-    types: [opened]
-
-permissions:
-  contents: write
-  issues: write
-  pull-requests: write
-  repository_projects: write
-  security_events: write
-  statuses: write
-  actions: write
-  checks: write
-  deployments: write
-  discussions: write
-  packages: write
-  pages: write
-  repository-projects: write
-  security-events: write
-  id-token: write
-
-jobs:
-  auto_assign_job:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-      repository_projects: write
-      security_events: write
-      statuses: write
-      actions: write
-      checks: write
-      deployments: write
-      discussions: write
-      packages: write
-      pages: write
-      repository-projects: write
-      security-events: write
-      id-token: write
-
-    # Steps to be executed in this job
-    steps:
-      # Automatically assigns an issue to user rootgov
-      - name: 'Auto-assign issue'
-        uses: pozil/auto-assign-issue@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: rootgov
-          numOfAssignee: 1
-
-      # Additional step with a valid GitHub action
-      - name: 'Additional step'
-        uses: ${{ github.action }}
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: rootgov
-          numOfAssignee: 1
+          types: [opened]
+      
+  permissions:
+        contents: write
+        issues: write
+        pull-requests: write
+        repository_projects: write
+        security_events: write
+        statuses: write
+        actions: write
+        checks: write
+        deployments: write
+        discussions: write
+        packages: write
+        pages: write
+        repository-projects: write
+        security-events: write
+        id-token: write
+      
+      jobs:
+        auto_assign_job:
+          runs-on: ubuntu-latest
+          permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+            repository_projects: write
+            security_events: write
+            statuses: write
+            actions: write
+            checks: write
+            deployments: write
+            discussions: write
+            packages: write
+            pages: write
+            repository-projects: write
+            security-events: write
+            id-token: write
+      
+          # Steps to be executed in this job
+          steps:
+            # Automatically assigns an issue to user rootgov
+            - name: 'Auto-assign issue'
+              uses: pozil/auto-assign-issue@v1
+              with:
+                repo-token: ${{ secrets.GITHUB_TOKEN }}
+                assignees: rootgov
+                numOfAssignee: 1
+      
+            # Additional step with a valid GitHub action
+            - name: 'Additional step'
+              uses: ${{ github.action }}
+              with:
+                repo-token: ${{ secrets.GITHUB_TOKEN }}
+                assignees: rootgov
+                numOfAssignee: 1
